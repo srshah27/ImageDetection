@@ -14,81 +14,82 @@ let options_py = {
 // sd = started on image number
 // cd = current number of images currently processed
 // er = error message to see if manual stitching is required
+// er_msg = shows files with errors
 // fd = file directory of the stitched image
 // finished = save file location of the stitched image
 
 let { PythonShell } = require("python-shell");
-let pyshell = new PythonShell("./src/engine/trial.py", options_py); // for when py is converted to exe
+// let pyshell = new PythonShell("./src/engine/trial.py", options_py); // for when py is converted to exe
 // let pyshell = new PythonShell("./src/trial.exe", options_exe); // for when py is converted to exe
-// let pyshell = new PythonShell("./resources/app/src/trial.exe", options_exe);  // for when py is converted to exe
+let pyshell = new PythonShell("./resources/app/src/trial.exe", options_exe);  // for when py is converted to exe
 
 fileNames = [];
 hasPythonCodeRun = false;
 hasPythonCodeStarted = false;
 var imageUpload = document.getElementById("image-upload");
-const imageContainer = document.getElementById('image-container');
+// const imageContainer = document.getElementById('image-container');
 imageUpload.addEventListener("change", function (event) {
 
-  // Create a FileReader object
-  const reader = new FileReader();
+  // // Create a FileReader object
+  // const reader = new FileReader();
   
-  // Set up the reader to load the image
-  reader.onload = function(e) {
-    // Create a new image element
-    const img = document.createElement('img');
+  // // Set up the reader to load the image
+  // reader.onload = function(e) {
+  //   // Create a new image element
+  //   const img = document.createElement('img');
     
-    // Set the source of the image to the loaded file
-    img.src = e.target.result;
+  //   // Set the source of the image to the loaded file
+  //   img.src = e.target.result;
     
-    // Wait for the image to load
-    img.onload = function() {
-      // Create a canvas element
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+  //   // Wait for the image to load
+  //   img.onload = function() {
+  //     // Create a canvas element
+  //     const canvas = document.createElement('canvas');
+  //     const ctx = canvas.getContext('2d');
       
-      // Calculate the desired width and height for the resized image
-      const maxWidth = 300; // Change this value to your desired maximum width
-      const maxHeight = 300; // Change this value to your desired maximum height
-      let width = img.width;
-      let height = img.height;
+  //     // Calculate the desired width and height for the resized image
+  //     const maxWidth = 300; // Change this value to your desired maximum width
+  //     const maxHeight = 300; // Change this value to your desired maximum height
+  //     let width = img.width;
+  //     let height = img.height;
       
-      // Adjust the width and height if necessary to fit within the maximum dimensions
-      if (width > maxWidth || height > maxHeight) {
-        const aspectRatio = width / height;
+  //     // Adjust the width and height if necessary to fit within the maximum dimensions
+  //     if (width > maxWidth || height > maxHeight) {
+  //       const aspectRatio = width / height;
         
-        if (aspectRatio > 1) {
-          width = maxWidth;
-          height = width / aspectRatio;
-        } else {
-          height = maxHeight;
-          width = height * aspectRatio;
-        }
-      }
+  //       if (aspectRatio > 1) {
+  //         width = maxWidth;
+  //         height = width / aspectRatio;
+  //       } else {
+  //         height = maxHeight;
+  //         width = height * aspectRatio;
+  //       }
+  //     }
       
-      // Set the canvas dimensions to the rotated image dimensions
-      canvas.width = height;
-      canvas.height = width;
+  //     // Set the canvas dimensions to the rotated image dimensions
+  //     canvas.width = height;
+  //     canvas.height = width;
       
-      // Rotate the canvas to make the image vertical
-      ctx.translate(height, 0);
-      ctx.rotate(90 * Math.PI / 180);
+  //     // Rotate the canvas to make the image vertical
+  //     ctx.translate(height, 0);
+  //     ctx.rotate(90 * Math.PI / 180);
       
-      // Draw the rotated image onto the canvas
-      ctx.drawImage(img, 0, 0, width, height);
+  //     // Draw the rotated image onto the canvas
+  //     ctx.drawImage(img, 0, 0, width, height);
       
-      // Convert the canvas content to a data URL
-      const rotatedImageSrc = canvas.toDataURL();
+  //     // Convert the canvas content to a data URL
+  //     const rotatedImageSrc = canvas.toDataURL();
       
-      // Create a new image element for the rotated image
-      const rotatedImg = document.createElement('img');
+  //     // Create a new image element for the rotated image
+  //     const rotatedImg = document.createElement('img');
       
-      // Set the source of the rotated image to the data URL
-      rotatedImg.src = rotatedImageSrc;
+  //     // Set the source of the rotated image to the data URL
+  //     rotatedImg.src = rotatedImageSrc;
       
-      // Append the rotated image to the image container
-      imageContainer.appendChild(rotatedImg);
-    };
-  };
+  //     // Append the rotated image to the image container
+  //     imageContainer.appendChild(rotatedImg);
+  //   };
+  // };
   
 
   // Reset state to before python code was run
@@ -110,69 +111,69 @@ imageUpload.addEventListener("change", function (event) {
 });
 
 function pythonRunner(files) {
-  // Create a FileReader object
-  const reader = new FileReader();
+  // // Create a FileReader object
+  // const reader = new FileReader();
   
-  // Set up the reader to load the image
-  reader.onload = function(e) {
-    // Create a new image element
-    const img = document.createElement('img');
+  // // Set up the reader to load the image
+  // reader.onload = function(e) {
+  //   // Create a new image element
+  //   const img = document.createElement('img');
     
-    // Set the source of the image to the loaded file
-    img.src = e.target.result;
+  //   // Set the source of the image to the loaded file
+  //   img.src = e.target.result;
     
-    // Wait for the image to load
-    img.onload = function() {
-      // Clear the previous images
-      imageContainer.innerHTML = '';
+  //   // Wait for the image to load
+  //   img.onload = function() {
+  //     // Clear the previous images
+  //     imageContainer.innerHTML = '';
 
-      // Create a canvas element
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+  //     // Create a canvas element
+  //     const canvas = document.createElement('canvas');
+  //     const ctx = canvas.getContext('2d');
       
-      // Calculate the desired width and height for the resized image
-      const maxWidth = 300; // Change this value to your desired maximum width
-      const maxHeight = 300; // Change this value to your desired maximum height
-      let width = img.width;
-      let height = img.height;
+  //     // Calculate the desired width and height for the resized image
+  //     const maxWidth = 300; // Change this value to your desired maximum width
+  //     const maxHeight = 300; // Change this value to your desired maximum height
+  //     let width = img.width;
+  //     let height = img.height;
       
-      // Adjust the width and height if necessary to fit within the maximum dimensions
-      if (width > maxWidth || height > maxHeight) {
-        const aspectRatio = width / height;
+  //     // Adjust the width and height if necessary to fit within the maximum dimensions
+  //     if (width > maxWidth || height > maxHeight) {
+  //       const aspectRatio = width / height;
         
-        if (aspectRatio > 1) {
-          width = maxWidth;
-          height = width / aspectRatio;
-        } else {
-          height = maxHeight;
-          width = height * aspectRatio;
-        }
-      }
+  //       if (aspectRatio > 1) {
+  //         width = maxWidth;
+  //         height = width / aspectRatio;
+  //       } else {
+  //         height = maxHeight;
+  //         width = height * aspectRatio;
+  //       }
+  //     }
       
-      // Set the canvas dimensions to the rotated image dimensions
-      canvas.width = height;
-      canvas.height = width;
+  //     // Set the canvas dimensions to the rotated image dimensions
+  //     canvas.width = height;
+  //     canvas.height = width;
       
-      // Rotate the canvas to make the image vertical
-      ctx.translate(height, 0);
-      ctx.rotate(90 * Math.PI / 180);
+  //     // Rotate the canvas to make the image vertical
+  //     ctx.translate(height, 0);
+  //     ctx.rotate(90 * Math.PI / 180);
       
-      // Draw the rotated image onto the canvas
-      ctx.drawImage(img, 0, 0, width, height);
+  //     // Draw the rotated image onto the canvas
+  //     ctx.drawImage(img, 0, 0, width, height);
       
-      // Convert the canvas content to a data URL
-      const rotatedImageSrc = canvas.toDataURL();
+  //     // Convert the canvas content to a data URL
+  //     const rotatedImageSrc = canvas.toDataURL();
       
-      // Create a new image element for the rotated image
-      const rotatedImg = document.createElement('img');
+  //     // Create a new image element for the rotated image
+  //     const rotatedImg = document.createElement('img');
       
-      // Set the source of the rotated image to the data URL
-      rotatedImg.src = rotatedImageSrc;
+  //     // Set the source of the rotated image to the data URL
+  //     rotatedImg.src = rotatedImageSrc;
 
-      // Append the rotated image to the image container
-      imageContainer.appendChild(rotatedImg);
-    };
-  };
+  //     // Append the rotated image to the image container
+  //     imageContainer.appendChild(rotatedImg);
+  //   };
+  // };
 
   var progressBarParent = document.getElementById("progress-bar-parent");
   progressBarParent.classList.remove("d-none");
@@ -180,7 +181,9 @@ function pythonRunner(files) {
   var outputMessage = document.getElementById("python-output");
   outputMessage.classList.remove("d-none");
   let cdTotal = 0;
-  console.log("hi");
+  let errors = [];
+  localStorage.removeItem("errors")
+
   pyshell.on("message", function (message) {
 
     console.log(message);
@@ -251,18 +254,48 @@ function pythonRunner(files) {
         var fileOpenButton = document.getElementById("file-open-button");
         var fileCopyButton = document.getElementById("copy-path-button");
         var outputMessage = document.getElementById("python-output");
-        outputMessage.classList.replace("alert-info", "alert-success");
-        outputMessage.innerHTML = '<i class="bi bi-check-lg"></i> All Images Measured Successfully!';
+        var progressBar = document.getElementById("progress-bar");
+
+
         fileOpenButton.style.display = "block";
         fileCopyButton.style.display = "block";
 
-        var progressBar = document.getElementById("progress-bar");
-        progressBar.classList.add("bg-success");
+        errors = localStorage.getItem("errors")
+
+        if (localStorage.getItem("errors") !== null) {
+          console.log("errors");
+          errors = localStorage.getItem("errors").split(",");
+          outputMessage.classList.replace("alert-info", "alert-warning");
+          outputMessage.classList.replace("alert-danger", "alert-warning");
+          outputMessage.innerHTML = '<i class="bi bi-exclamation-triangle"></i> All Images Processed, An Error Occured in ' + errors;
+          progressBar.classList.add("bg-warning");
+        }
+
+        else {
+          outputMessage.classList.replace("alert-info", "alert-success");
+          outputMessage.innerHTML = '<i class="bi bi-check-lg"></i> All Images Measured Successfully!';
+          progressBar.classList.add("bg-success");
+
+        }
+
         percentageDone = 100;
         progressBar.setAttribute("aria-valuenow", percentageDone);
         progressBar.style.width = percentageDone + "%";
       }
     }
+
+    if (typeofmessage == "er_msg") {
+      hasPythonCodeRun = true;
+      var outputMessage = document.getElementById("python-output");
+      outputMessage.classList.replace("alert-info", "alert-danger");
+      outputMessage.innerHTML = '<i class="bi bi-exclamation-triangle"></i> An Error Occured in ' + messagecode + '. Please Try Again.';
+
+      errors.push(messagecode);
+      localStorage.setItem("errors", errors);
+
+
+    }
+
     if (typeofmessage == "finished") {
       let strippedPath = message.replace(/^finished:/, "");
       // shell.openPath(strippedPath);

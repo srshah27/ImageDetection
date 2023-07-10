@@ -1,7 +1,7 @@
 {
   "name": "dimension-finder",
   "productName": "dimension-finder-app",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "Find the dimensions of items in an image",
   "main": "src/index.js",
   "scripts": {
@@ -20,7 +20,8 @@
   "dependencies": {
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "python-shell": "^5.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.2.1",

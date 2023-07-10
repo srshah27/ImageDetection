@@ -94,7 +94,7 @@ out/
 
 # outputs
 output/
-
+trial_images/
 
 
 # pyinstaller build files

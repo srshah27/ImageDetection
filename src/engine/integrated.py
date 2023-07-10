@@ -161,6 +161,7 @@ def custom_detect(image):
     # image = cv2.imread("smt_new_try/3\IMG_0006.JPG")
 
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)  # convert to grayscale for threshold
+    # cv.imwrite("gray.jpeg", gray)
     # imgBlur = cv2.medianBlur(gray, 5)
     # ret, thresholded = cv2.threshold(imgBlur, 30, 50, cv2.THRESH_BINARY)
     # mask = cv2.adaptiveThreshold(thresholded, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 35, 15)  # or try GaussianBlur
@@ -200,8 +201,9 @@ def custom_detect(image):
     # imgErode = cv2.dilate(dilation, kernel, iterations=1)
 
     erosion = cv.dilate(mask, None, iterations=2)
+    # cv.imwrite("erosion.jpeg", erosion)
     imgErode = cv.erode(erosion, None, iterations=2)
-
+    # cv.imwrite("imgErode.jpeg", imgErode)
     # show_images(imgErode)
     #   detectLongestLine(imgErode)
 
@@ -214,7 +216,7 @@ def custom_detect(image):
     # Draw a bounding box around the largest contour
     x, y, w, h = cv.boundingRect(largest_contour)
     cv.rectangle(image, (x, y), (x + w, y + h), (255, 0, 255), 3)
-
+    # cv.imwrite("bounding_box.jpeg", image)
     # Calculate the coordinates of the four corners of the bounding box
     top_left = (x, y)
     top_right = (x + w, y)
@@ -245,16 +247,20 @@ def custom_detect(image):
     # cv.imwrite("moiz_cal.jpeg", image)
 
 
-def detectMinGruve():
+def detectMinGruve(croppedImgFile):
     global min_height
-    imgFile = cv.imread(f"{saveFolder}\cropped_img.jpg")
+    imgFile = croppedImgFile
+    # imgFile = cv.imread(f"{saveFolder}\cropped_img.jpg")
     ## ------------------------------Manipulation starts here----------------------
     gray = cv.cvtColor(imgFile, cv.COLOR_BGR2GRAY)  # convert to grayscale for threshold
     imgBlur = cv.medianBlur(gray, 5)
     # or try GaussianBlur
     imgBlur = cv.GaussianBlur(imgFile, (5, 5), cv.BORDER_DEFAULT)
+    blurPath = f"{saveFolder}/blurimg.jpg"
 
+    cv.imwrite(blurPath, imgBlur)
     imgCanny = cv.Canny(imgBlur, 50, 200, True)
+    
     imgDial = cv.dilate(imgCanny, None, iterations=3)
     imgErode = cv.erode(imgDial, None, iterations=2)
 
@@ -268,6 +274,7 @@ def detectMinGruve():
     ##----------------------------------Converting to Binary---------------------------------
 
     prcImg = cv.imread(savePath)
+    # prcImg = imgDial
     prcGray = cv.cvtColor(prcImg, cv.COLOR_BGR2GRAY)
     (thresh, binary) = cv.threshold(prcGray, 127, 255, cv.THRESH_BINARY)
 
@@ -325,6 +332,7 @@ def detectMinGruve():
     ## -------------------------------------Plotting the points------------------------------------
 
     plotimg = cv.imread(imgPath)
+    # plotimg = fullImgFile
 
 
     # selectUp.to_csv("out/csv/selectUp.csv")
@@ -354,7 +362,8 @@ outputName = "output"
 directory = os.path.dirname(os.path.abspath(outputName))
 outputPath = os.path.join(directory, outputName)
 os.makedirs(outputPath, exist_ok=True)
-imgPath = "./src/assets/IMG_00016.JPG"
+imgPath = "./src/assets/IMG_00016.JPG" # use during development
+# imgPath = "./resources/app/src/assets/IMG_00016.JPG"  # use during build
 saveFolderName = "save_folder"
 saveFolder = os.path.join(outputPath, saveFolderName)
 savePath = f"{saveFolder}/outImgOut.jpg"
@@ -372,22 +381,28 @@ pixelsPerMetric = 0
 def arucoSetup():
     global pixelsPerMetric, imgFile, imgCustom
     dict = arucoClass.main()
+    # cv.imwrite("imgFile.jpg", imgFile)
     arucoLen = dict["id"]
+    print(f"arucoLen: {arucoLen}")
     pixelsPerMetric = dict["ratio"]
     imgFile = imgFile[0 : img_shape[0], 0 : dict["bottom_right"][0] - 50]
     imgCustom = imgCustom[0 : img_shape[0], 0 : dict["bottom_right"][0] - 50]
-
+    # cv.imwrite("imgCustom.jpg", imgCustom)
 
 def getImg(path):
     """
     Reads the image
     """
 
-    global imageTaken, imgPath
+    global imageTaken, imgPath, imgMain, imgFile, imgCustom
     try:
         # imageTaken = cv.imread(path)
         imgPath = path
         print(f"this is imgPath -> {imgPath}")
+        imgMain = cv.imread(imgPath)
+        imgFile = imgMain.copy()
+        imgCustom = imgMain.copy()
+        
         return Image.open(path)
         # imwrite("trimtest_temp.png", imageTaken, [int(IMWRITE_PNG_COMPRESSION), 5])
 
@@ -414,6 +429,6 @@ def calculate():
     print("save Folder at", saveFolder)
     writePath = os.path.join(saveFolder, "cropped_img.jpg")
     cv.imwrite(writePath, imgFile)
-    detectMinGruve()
+    detectMinGruve(imgFile)
     writeOutput(imgPath, outputPath, full_width, max_height, min_height)
 
