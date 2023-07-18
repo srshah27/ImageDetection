@@ -1,7 +1,7 @@
 {
   "name": "dimension-finder",
-  "productName": "dimension-finder-app",
-  "version": "0.1.1",
+  "productName": "Dimension Finder",
+  "version": "1.0.0",
   "description": "Find the dimensions of items in an image",
   "main": "src/index.js",
   "scripts": {

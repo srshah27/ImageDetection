@@ -11,6 +11,8 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
+    icon: "./resources/app/src/assets/square-smt-logo.png",
     webPreferences: {
       // preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -18,6 +20,26 @@ const createWindow = () => {
       enableRemoteModule: true,
     },
   });
+
+  var splash = new BrowserWindow({
+    icon: "./resources/app/src/assets/square-smt-logo.png",
+    width: 650,
+    height: 450,
+    transparent: true,
+    frame: false,
+    alwaysOnTop: false,
+    resizable: false,
+    
+  });
+
+  splash.loadFile("./src/splash.html");
+  splash.center();
+  setTimeout(function () {
+    splash.close();
+    mainWindow.center();
+    mainWindow.show();
+    mainWindow.maximize();
+  }, 11000);
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'size-detect.html'));
