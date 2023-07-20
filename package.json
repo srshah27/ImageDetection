@@ -1,8 +1,8 @@
 {
-  "name": "dimension-finder",
-  "productName": "Dimension Finder",
+  "name": "measurement-using-computer-vision",
+  "productName": "Measurement Using Computer Vision",
   "version": "1.0.0",
-  "description": "Find the dimensions of items in an image",
+  "description": "Find the measurements of item in an image",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
