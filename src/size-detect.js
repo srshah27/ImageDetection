@@ -27,69 +27,69 @@ fileNames = [];
 hasPythonCodeRun = false;
 hasPythonCodeStarted = false;
 var imageUpload = document.getElementById("image-upload");
-// const imageContainer = document.getElementById('image-container');
+const imageContainer = document.getElementById('image-container');
 imageUpload.addEventListener("change", function (event) {
 
-  // // Create a FileReader object
-  // const reader = new FileReader();
+  // Create a FileReader object
+  const reader = new FileReader();
   
-  // // Set up the reader to load the image
-  // reader.onload = function(e) {
-  //   // Create a new image element
-  //   const img = document.createElement('img');
+  // Set up the reader to load the image
+  reader.onload = function(e) {
+    // Create a new image element
+    const img = document.createElement('img');
     
-  //   // Set the source of the image to the loaded file
-  //   img.src = e.target.result;
+    // Set the source of the image to the loaded file
+    img.src = e.target.result;
     
-  //   // Wait for the image to load
-  //   img.onload = function() {
-  //     // Create a canvas element
-  //     const canvas = document.createElement('canvas');
-  //     const ctx = canvas.getContext('2d');
+    // Wait for the image to load
+    img.onload = function() {
+      // Create a canvas element
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-  //     // Calculate the desired width and height for the resized image
-  //     const maxWidth = 300; // Change this value to your desired maximum width
-  //     const maxHeight = 300; // Change this value to your desired maximum height
-  //     let width = img.width;
-  //     let height = img.height;
+      // Calculate the desired width and height for the resized image
+      const maxWidth = 300; // Change this value to your desired maximum width
+      const maxHeight = 300; // Change this value to your desired maximum height
+      let width = img.width;
+      let height = img.height;
       
-  //     // Adjust the width and height if necessary to fit within the maximum dimensions
-  //     if (width > maxWidth || height > maxHeight) {
-  //       const aspectRatio = width / height;
+      // Adjust the width and height if necessary to fit within the maximum dimensions
+      if (width > maxWidth || height > maxHeight) {
+        const aspectRatio = width / height;
         
-  //       if (aspectRatio > 1) {
-  //         width = maxWidth;
-  //         height = width / aspectRatio;
-  //       } else {
-  //         height = maxHeight;
-  //         width = height * aspectRatio;
-  //       }
-  //     }
+        if (aspectRatio > 1) {
+          width = maxWidth;
+          height = width / aspectRatio;
+        } else {
+          height = maxHeight;
+          width = height * aspectRatio;
+        }
+      }
       
-  //     // Set the canvas dimensions to the rotated image dimensions
-  //     canvas.width = height;
-  //     canvas.height = width;
+      // Set the canvas dimensions to the rotated image dimensions
+      canvas.width = height;
+      canvas.height = width;
       
-  //     // Rotate the canvas to make the image vertical
-  //     ctx.translate(height, 0);
-  //     ctx.rotate(90 * Math.PI / 180);
+      // Rotate the canvas to make the image vertical
+      ctx.translate(height, 0);
+      ctx.rotate(90 * Math.PI / 180);
       
-  //     // Draw the rotated image onto the canvas
-  //     ctx.drawImage(img, 0, 0, width, height);
+      // Draw the rotated image onto the canvas
+      ctx.drawImage(img, 0, 0, width, height);
       
-  //     // Convert the canvas content to a data URL
-  //     const rotatedImageSrc = canvas.toDataURL();
+      // Convert the canvas content to a data URL
+      const rotatedImageSrc = canvas.toDataURL();
       
-  //     // Create a new image element for the rotated image
-  //     const rotatedImg = document.createElement('img');
+      // Create a new image element for the rotated image
+      const rotatedImg = document.createElement('img');
       
-  //     // Set the source of the rotated image to the data URL
-  //     rotatedImg.src = rotatedImageSrc;
+      // Set the source of the rotated image to the data URL
+      rotatedImg.src = rotatedImageSrc;
       
-  //     // Append the rotated image to the image container
-  //     imageContainer.appendChild(rotatedImg);
-  //   };
-  // };
+      // Append the rotated image to the image container
+      imageContainer.appendChild(rotatedImg);
+    };
+  };
   
 
   // Reset state to before python code was run
@@ -111,69 +111,69 @@ imageUpload.addEventListener("change", function (event) {
 });
 
 function pythonRunner(files) {
-  // // Create a FileReader object
-  // const reader = new FileReader();
+  // Create a FileReader object
+  const reader = new FileReader();
   
-  // // Set up the reader to load the image
-  // reader.onload = function(e) {
-  //   // Create a new image element
-  //   const img = document.createElement('img');
+  // Set up the reader to load the image
+  reader.onload = function(e) {
+    // Create a new image element
+    const img = document.createElement('img');
     
-  //   // Set the source of the image to the loaded file
-  //   img.src = e.target.result;
+    // Set the source of the image to the loaded file
+    img.src = e.target.result;
     
-  //   // Wait for the image to load
-  //   img.onload = function() {
-  //     // Clear the previous images
-  //     imageContainer.innerHTML = '';
+    // Wait for the image to load
+    img.onload = function() {
+      // Clear the previous images
+      imageContainer.innerHTML = '';
 
-  //     // Create a canvas element
-  //     const canvas = document.createElement('canvas');
-  //     const ctx = canvas.getContext('2d');
+      // Create a canvas element
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-  //     // Calculate the desired width and height for the resized image
-  //     const maxWidth = 300; // Change this value to your desired maximum width
-  //     const maxHeight = 300; // Change this value to your desired maximum height
-  //     let width = img.width;
-  //     let height = img.height;
+      // Calculate the desired width and height for the resized image
+      const maxWidth = 300; // Change this value to your desired maximum width
+      const maxHeight = 300; // Change this value to your desired maximum height
+      let width = img.width;
+      let height = img.height;
       
-  //     // Adjust the width and height if necessary to fit within the maximum dimensions
-  //     if (width > maxWidth || height > maxHeight) {
-  //       const aspectRatio = width / height;
+      // Adjust the width and height if necessary to fit within the maximum dimensions
+      if (width > maxWidth || height > maxHeight) {
+        const aspectRatio = width / height;
         
-  //       if (aspectRatio > 1) {
-  //         width = maxWidth;
-  //         height = width / aspectRatio;
-  //       } else {
-  //         height = maxHeight;
-  //         width = height * aspectRatio;
-  //       }
-  //     }
+        if (aspectRatio > 1) {
+          width = maxWidth;
+          height = width / aspectRatio;
+        } else {
+          height = maxHeight;
+          width = height * aspectRatio;
+        }
+      }
       
-  //     // Set the canvas dimensions to the rotated image dimensions
-  //     canvas.width = height;
-  //     canvas.height = width;
+      // Set the canvas dimensions to the rotated image dimensions
+      canvas.width = height;
+      canvas.height = width;
       
-  //     // Rotate the canvas to make the image vertical
-  //     ctx.translate(height, 0);
-  //     ctx.rotate(90 * Math.PI / 180);
+      // Rotate the canvas to make the image vertical
+      ctx.translate(height, 0);
+      ctx.rotate(90 * Math.PI / 180);
       
-  //     // Draw the rotated image onto the canvas
-  //     ctx.drawImage(img, 0, 0, width, height);
+      // Draw the rotated image onto the canvas
+      ctx.drawImage(img, 0, 0, width, height);
       
-  //     // Convert the canvas content to a data URL
-  //     const rotatedImageSrc = canvas.toDataURL();
+      // Convert the canvas content to a data URL
+      const rotatedImageSrc = canvas.toDataURL();
       
-  //     // Create a new image element for the rotated image
-  //     const rotatedImg = document.createElement('img');
+      // Create a new image element for the rotated image
+      const rotatedImg = document.createElement('img');
       
-  //     // Set the source of the rotated image to the data URL
-  //     rotatedImg.src = rotatedImageSrc;
+      // Set the source of the rotated image to the data URL
+      rotatedImg.src = rotatedImageSrc;
 
-  //     // Append the rotated image to the image container
-  //     imageContainer.appendChild(rotatedImg);
-  //   };
-  // };
+      // Append the rotated image to the image container
+      imageContainer.appendChild(rotatedImg);
+    };
+  };
 
   var progressBarParent = document.getElementById("progress-bar-parent");
   progressBarParent.classList.remove("d-none");
@@ -193,11 +193,11 @@ function pythonRunner(files) {
       sd = messagecode;
       if (sd==0){
         const defaultImage = document.getElementById('default-image');
-        // defaultImage.classList.add('d-none');
+        defaultImage.classList.add('d-none');
       }
       // Read the file as a data URL
       console.log(files[sd]);
-      // reader.readAsDataURL(files[sd]);
+      reader.readAsDataURL(files[sd]);
     }
 
 

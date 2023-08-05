@@ -1,7 +1,7 @@
 {
   "name": "measurement-using-computer-vision",
   "productName": "Measurement Using Computer Vision",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find the measurements of item in an image",
   "main": "src/index.js",
   "scripts": {
