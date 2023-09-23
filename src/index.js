@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require("fs");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -39,14 +40,14 @@ const createWindow = () => {
     mainWindow.center();
     mainWindow.show();
     mainWindow.maximize();
-  }, 11000);
+  }, 110);
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'size-detect.html'));
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
-  mainWindow.setMenuBarVisibility(false);
+  mainWindow.setMenuBarVisibility(true);
 };
 
 // This method will be called when Electron has finished
@@ -61,6 +62,20 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// Handle the 'save-data' message from the renderer process
+ipcMain.on('save-data', (event, data) => {
+  // Define the path to save the JSON file (adjust as needed)
+  // const filePath = path.join(app.getPath('userData'), 'data.json');
+  // Write the data to a JSON file
+  fs.writeFile('project-settings.json', data, (err) => {
+      if (err) {
+          console.error('Error saving data to JSON:', err);
+      } else {
+          console.log('Data saved to JSON successfully.');
+      }
+  });
 });
 
 app.on('activate', () => {

@@ -104,3 +104,5 @@ src/engine/*.spec
 src/engine/__pycache__
 src/engine/size-detect-env
 src/trial.exe
+
+python

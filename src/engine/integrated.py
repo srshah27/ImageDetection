@@ -125,7 +125,7 @@ class arucoClass:
                 returnDict["bottom_right"] = bottom_right
 
                 # Display the resulting frame
-                # cv2.imshow('frame', frame)
+                cv.imwrite('detectArUco.jpg', frame)
         except:
             print("No markers detected")
             # print(pixel_mm_ratio, aruco_perimeter)
@@ -150,7 +150,7 @@ def show_images(image):
 
     cv.imshow("a", cv.resize(image, dim, interpolation=cv.INTER_AREA))
     cv.waitKey(0)
-    # cv2.imwrite("moiz_cal.jpeg", image)
+    cv.imwrite("show_images.jpg", image)
 
 
 # ----------------------------------function to detect whole bit-------------------------
@@ -216,7 +216,7 @@ def custom_detect(image):
     # Draw a bounding box around the largest contour
     x, y, w, h = cv.boundingRect(largest_contour)
     cv.rectangle(image, (x, y), (x + w, y + h), (255, 0, 255), 3)
-    # cv.imwrite("bounding_box.jpeg", image)
+    cv.imwrite("bounding_box.jpeg", image)
     # Calculate the coordinates of the four corners of the bounding box
     top_left = (x, y)
     top_right = (x + w, y)
@@ -245,7 +245,6 @@ def custom_detect(image):
     full_width = the_length_comp
     max_height = the_height_comp
     # cv.imwrite("moiz_cal.jpeg", image)
-
 
 def detectMinGruve(croppedImgFile):
     global min_height
@@ -280,7 +279,7 @@ def detectMinGruve(croppedImgFile):
 
     print(binary.shape)  # (height, width, channels)
     height, width = binary.shape
-    cv.imwrite(f"{saveFolder}\Binary.jpg", binary)
+    cv.imwrite(f"{saveFolder}/Binary.jpg", binary)
     ## ---------------------------------Binary Ends here-------------------------------------
 
     ## ---------------------------------Manipulation ends here ------------------------------
@@ -362,8 +361,8 @@ outputName = "output"
 directory = os.path.dirname(os.path.abspath(outputName))
 outputPath = os.path.join(directory, outputName)
 os.makedirs(outputPath, exist_ok=True)
-# imgPath = "./src/assets/IMG_00016.JPG" # use during development
-imgPath = "./resources/app/src/assets/IMG_00016.JPG"  # use during build
+imgPath = "./src/assets/IMG_00016.JPG" # use during development
+# imgPath = "./resources/app/src/assets/IMG_00016.JPG"  # use during build
 saveFolderName = "save_folder"
 saveFolder = os.path.join(outputPath, saveFolderName)
 savePath = f"{saveFolder}/outImgOut.jpg"
@@ -430,5 +429,5 @@ def calculate():
     writePath = os.path.join(saveFolder, "cropped_img.jpg")
     cv.imwrite(writePath, imgFile)
     detectMinGruve(imgFile)
-    writeOutput(imgPath, outputPath, full_width, max_height, min_height)
+    writeOutput(imgPath, outputPath, full_width, max_height)
 

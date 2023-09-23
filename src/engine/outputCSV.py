@@ -4,13 +4,40 @@ sys.path.append('D:\\Projects\\ImageDetection\\Lib\\site-packages')
 
 import pandas as pd
 import os.path
-
-
-def writeOutput(imgName, outputPath, width, maxHeight, minHeight):
+import json
+from datetime import datetime
+        
+        
+def writeOutput(imgName, outputPath, width, maxHeight):
     fileName = "Output.csv"
     filePath = os.path.join(outputPath, fileName)
-
+    imgName = os.path.basename(imgName)
     
+    json_file_path = 'project-settings.json'
+    
+    try:
+        f = open (json_file_path, "r")
+        data = json.loads(f.read())
+        # 'data' is already a Python dictionary
+
+        # Access specific values from the dictionary
+        name = data['name']
+        operator = data['operator']
+        note = data['note']
+        
+
+        # You can use these values as needed
+        print(f'Name: {name}')
+        print(f'Operator: {operator}')
+        print(f'Note: {note}')
+
+    except:
+        print("No json file found")
+        name = ''
+        operator = ''
+        note = ''
+        
+        
     # check to include file header
     file_exists = os.path.isfile(filePath)
     # representing data in accordance with pandas dataFrame
@@ -18,8 +45,12 @@ def writeOutput(imgName, outputPath, width, maxHeight, minHeight):
         {
             "imgName": [imgName],
             "width": [width],
-            "Dmax": [maxHeight],
-            "Dmin": [minHeight],
+            "length": [maxHeight],
+            "name": [name],
+            "operator": [operator],
+            "date": [datetime.now().strftime("%A, %d %B %Y %I:%M:%S %p")],
+            "note": [note],
+            # "Dmin": [minHeight],
         },
     )
 

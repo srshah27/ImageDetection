@@ -17,6 +17,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background-image: url('./assets/bg-image.png');
+        background-size: cover; /* Adjust as needed */
+        background-repeat: no-repeat; /* Adjust as needed */
+        color: black;
       }
       .card-img-left {
         padding-left: 0;
@@ -26,7 +30,7 @@
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: rgb(45, 12, 88);
+        background-color: #6c757d;
         color: white;
         text-align: center;
       }
@@ -53,15 +57,54 @@
     </style>
   </head>
   <body>
-    <div class="card text-center">
+    <div class="card text-center" style="background-color: #9DB2BF; border-color: rgb(255, 0, 0);border-width: 3px; border-style: solid;">
+      <div
+        class="smtimage"
+        onclick="openSMTLink()"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Go to SMT Website"
+      >
+        <h2 class="smtname">
+          <img src="./assets/smt-logo.jpg" class="smticon" alt="SMT Logo" style="height: 50px;" /> Surface
+          Modification Technologies Pvt. Ltd.
+          <img src="./assets/smartBRAIN-logo.png" class="p-1" alt="SmartBRAIN Logo" style="width: 200px; margin-right: 20px; margin-top: 20px;">
+
+        </h2>
+      </div>
+      <hr class="p-0 m-0"></hr>
+
       <div class="row g-0 m-4">
         <div class="col-md-4">
           <div id="image-container" ></div>
-          <img src="./assets/IMG_00016_vertical.JPG" id="default-image" class="rounded float-start img-fluid card-img-left" alt="Default Image">
+          <img src="./assets/IMG_00016_vertical.JPG" id="default-image" class="rounded float-start img-fluid card-img-left" style="height: 50vh;" alt="Default Image">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h1 class="card-title">Measurement Using Computer Vision</h1>
+            <h1 class="card-title" style="color: black;">Measurement Using Computer Vision</h1>
+
+
+            <div class="col d-grid">
+              <button type="button" id="project-settings" class="btn btn-secondary btn-lg my-4" onclick="setProjectSettings()"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Set or Modify Project Settings"><i class="bi bi-ruler"></i> Project Settings</button>
+            </div>
+
+            <form id="project-settings-form" class="d-none ">
+              <div class="form-group ">
+                <label for="name" >Name(*):</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="operator" >Operator(*):</label>
+                <input type="text" class="form-control" id="operator" name="operator" required>
+              </div>
+              <div class="form-group">
+                <label for="note">Note:</label>
+                <textarea class="form-control" id="note" name="note" ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg m-2">Submit</button>
+            </form>
+
+
             <div class="row row-cols-2">
               <div class="col-12 d-grid">
                 <button type="button" id="file-open-button" class="btn btn-secondary btn-lg my-4" onclick="resetPage()" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Load other images for size measurement"><i class="bi bi-arrow-clockwise"></i> Reset</button>
